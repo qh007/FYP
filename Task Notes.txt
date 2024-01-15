@@ -1,0 +1,36 @@
+Tasks:
+1. build a basic ESN model
+2. find conformal prediction
+
+# Data used: Quarterly
+QUARTER
+Source: FRED - QD
+File: quarter.txt
+
+QY* - 5 - GDPC1 - Real Gross Domestic Product, 3 Decimal (Billions of Chained 2012 Dollars)
+data.q = read.csv(file = 'quarter.csv')
+
+# SPECIFY FUNCTIONS FOR DATA TRANSFORMATION
+D = function(x){
+  c(NA,diff(x))
+}
+DD = function(x){
+  c(NA,NA,diff(diff(x)))
+}
+L = function(x){
+  c(log(x))
+}
+DL = function(x){
+  c(NA,diff(log(x)))
+}
+DDL = function(x){
+  c(NA,NA,diff(diff(log(x))))
+}
+DPCT = function(x){
+  x1 = x[-(1)]
+  for (i in 1:length(x1)){
+    tt = (x[i+1]/x[i] - 1)
+    x1[i] = tt
+  }
+  c(NA,x1)
+}
