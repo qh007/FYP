@@ -3,7 +3,7 @@
 #
 #   Basic ESN functionality
 #
-# Current version:      January 2022
+# Current version:      Jan 2024
 # ================================================================
 
 from multiprocessing.sharedctypes import Value
@@ -23,7 +23,7 @@ from sklearn.model_selection import TimeSeriesSplit
 from pymoo.algorithms.soo.nonconvex.pattern import PatternSearch
 from pymoo.problems.functional import FunctionalProblem
 from pymoo.optimize import minimize
-from pymoo.factory import get_termination
+from pymoo.termination import get_termination
 
 # ----------------------------------------------------------------
 # Preamble

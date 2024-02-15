@@ -4,13 +4,14 @@ setwd('C:/Users/zhouq/OneDrive - Nanyang Technological University/FYP/Codes/FYP'
 GDP = read.table('quarter.txt', header = T, sep = ',')
 colnames(GDP)[1] = 'Date' 
 GDP$Date = as.Date(GDP$Date,format="%d/%m/%Y")
+GDP = GDP[1:244,]
 ts.plot(GDP$GDP)
 View(GDP)
 
 # Apply transformation 5 (dlog)
 gdp_log = log(GDP$GDP)
 gdp_log_diff = diff(gdp_log)
-ts.plot(gdp_log_diff, main="log_GDP (Quarterly, Lag 1)")
+ts.plot(gdp_log_diff, main="dlog_GDP (Quarterly)")
 
 # Fit a ARIMA(1,0,0)
 library(forecast)

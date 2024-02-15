@@ -3,7 +3,7 @@
 #
 #   Multi-frequency ESN updated toolbox
 #
-# Current version:      January 2022
+# Current version:      Jan 2024
 # ================================================================
 
 from math import floor, ceil, inf
@@ -26,7 +26,7 @@ from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.algorithms.soo.nonconvex.nelder import NelderMead
 from pymoo.problems.functional import FunctionalProblem
 from pymoo.optimize import minimize as pymoo_minimize
-from pymoo.factory import get_termination
+from pymoo.termination import get_termination
 #from pymoo.util.termination.x_tol import DesignSpaceToleranceTermination
 
 from newToolbox_ESN import ESN
