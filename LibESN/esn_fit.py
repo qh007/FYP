@@ -473,8 +473,8 @@ class ridgeCV:
             problem, 
             PatternSearch(n_sample_points=50), 
             #get_termination("n_eval", 500),
-            #get_termination("time", "00:01:00"),
-            get_termination("ftol", 1e-8),
+            get_termination("time", "00:01:00"),
+            #get_termination("ftol", 1e-8),
             verbose=False, 
             seed=1203477
         )
