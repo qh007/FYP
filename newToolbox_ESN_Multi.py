@@ -1883,10 +1883,10 @@ class ESNMultiFrequency:
         else:
             raise ValueError("Please choose a number of CV splits > 2 (option '-cv:__')")
 
-        for train_index, test_index in tscv.split(X_multi):
-            print(train_index)
-            print(test_index)
-            print("---------------------------")
+        # for train_index, test_index in tscv.split(X_multi):
+        #   print(train_index)
+        #    print(test_index)
+        #    print("---------------------------")
 
         assert steps > 0
         if multistep_cv:

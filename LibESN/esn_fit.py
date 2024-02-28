@@ -447,6 +447,8 @@ class ridgeCV:
         )
         iter_tscv = iter(tscv)
 
+            
+
         # objective function
         def cv_obj(cv_lambda):
             # Lambda = np.exp(cv_lambda)
@@ -481,6 +483,9 @@ class ridgeCV:
 
         # output
         cvLambda = result.X[0]
+
+        print(train_idxs = [])
+        print(test_idxs  = [])
 
         return({
             'model': "ESN",
