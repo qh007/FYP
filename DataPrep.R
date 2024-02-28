@@ -1,5 +1,6 @@
 setwd('C:/Users/zhouq/OneDrive - Nanyang Technological University/FYP/Codes/FYP')
 library(lubridate)
+library(tseries)
 
 # Load Data
 data.m = read.table('month.txt', header = T, sep = ',')
@@ -114,3 +115,11 @@ data.q[1,1]= dmy('31/03/1959')
 # combine datasets
 data_transform <- cbind(data.q, data.q1)
 write.csv(data_transform, "Data_transform.csv", row.names=FALSE)
+
+# check unit root
+adf.test(na.omit(data.q$GDP))
+## p-value is small --> reject H0: non-stationary and data is stationary 
+
+adf.test(na.omit(data.q1[,1]))
+adf.test(na.omit(data.q1[,2]))
+adf.test(na.omit(data.q1[,3]))
