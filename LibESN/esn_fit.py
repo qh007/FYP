@@ -484,8 +484,8 @@ class ridgeCV:
         # output
         cvLambda = result.X[0]
 
-        print(train_idxs = [])
-        print(test_idxs  = [])
+        print(train_idxs)
+        print(test_idxs)
 
         return({
             'model': "ESN",
