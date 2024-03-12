@@ -116,10 +116,22 @@ data.q[1,1]= dmy('31/03/1959')
 data_transform <- cbind(data.q, data.q1)
 write.csv(data_transform, "Data_transform.csv", row.names=FALSE)
 
-# check unit root
-adf.test(na.omit(data.q$GDP))
-## p-value is small --> reject H0: non-stationary and data is stationary 
+# unit root test to check that all data are stationary
+# Agumented Dicky-Fullter test
+# H0: not stationary vs H1: stationary
 
-adf.test(na.omit(data.q1[,1]))
-adf.test(na.omit(data.q1[,2]))
-adf.test(na.omit(data.q1[,3]))
+result <- data.frame(Variable = character(), p_value = numeric(), Reject_H0 = character(), stringsAsFactors = FALSE)
+
+for (col in colnames(data_transform)) {
+  test_result = adf.test(na.omit(data_transform[[col]]))
+  p_value = test_result$p.value
+  reject = ifelse(p_value < 0.05, "Yes", "No")
+  result = rbind(result, data.frame(Variable = col, p_value = p_value, Reject_H0 = reject))
+}
+result
+
+#output results as LATEX table
+library(xtable)
+xtable_result <- xtable(result[2:nrow(result),])
+# Print the LaTeX code for the table with a caption and label
+print(xtable_result, include.rownames = FALSE)
