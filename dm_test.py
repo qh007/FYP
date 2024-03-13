@@ -35,45 +35,6 @@
 #
 ##########################################################
 def dm_test(actual_lst, pred1_lst, pred2_lst, h = 1, crit="MSE", power = 2):
-    # Routine for checking errors
-    def error_check():
-        rt = 0
-        msg = ""
-        # Check if h is an integer
-        if (not isinstance(h, int)):
-            rt = -1
-            msg = "The type of the number of steps ahead (h) is not an integer."
-            return (rt,msg)
-        # Check the range of h
-        if (h < 1):
-            rt = -1
-            msg = "The number of steps ahead (h) is not large enough."
-            return (rt,msg)
-        len_act = len(actual_lst)
-        len_p1  = len(pred1_lst)
-        len_p2  = len(pred2_lst)
-        # Check if lengths of actual values and predicted values are equal
-        if (len_act != len_p1 or len_p1 != len_p2 or len_act != len_p2):
-            rt = -1
-            msg = "Lengths of actual_lst, pred1_lst and pred2_lst do not match."
-            return (rt,msg)
-        # Check range of h
-        if (h >= len_act):
-            rt = -1
-            msg = "The number of steps ahead is too large."
-            return (rt,msg)
-        # Check if criterion supported
-        if (crit != "MSE" and crit != "MAPE" and crit != "MAD" and crit != "poly"):
-            rt = -1
-            msg = "The criterion is not supported."
-            return (rt,msg)  
-        
-    # Error check
-    error_code = error_check()
-    # Raise error if cannot pass error check
-    if (error_code[0] == -1):
-        raise SyntaxError(error_code[1])
-        return
     # Import libraries
     from scipy.stats import t
     import collections
