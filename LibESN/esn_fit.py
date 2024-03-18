@@ -350,9 +350,12 @@ def ridge(X: np.ndarray, Y: np.ndarray, Lambda=None):
     if L.shape == ():
         # Lambda is a scalar 
         if L < 1e-12:
-            V = np.hstack((np.ones((Tx, 1)), X))
-            res = np.linalg.lstsq(V, Y, rcond=None)
-            W = res[0]
+            # V = np.hstack((np.ones((Tx, 1)), X))
+            #res = np.linalg.lstsq(V, Y, rcond=None)
+            #W = res[0]
+            V = np.linalg.pinv((X.T @ X / Tx) + L * np.eye(Kx))
+            W = V @ (X.T @ Y / Ty)
+
         else:
             W = np.linalg.solve(((X.T @ X / Tx) + L * np.eye(Kx)), (X.T @ Y / Ty))
             a = np.mean(Y.T, axis=1) - W.T @ np.mean(X.T, axis=1).T
