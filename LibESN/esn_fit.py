@@ -355,7 +355,9 @@ def ridge(X: np.ndarray, Y: np.ndarray, Lambda=None):
             #W = res[0]
             V = np.linalg.pinv((X.T @ X / Tx) + L * np.eye(Kx))
             W = V @ (X.T @ Y / Ty)
-
+            a = np.mean(Y.T, axis=1) - W.T @ np.mean(X.T, axis=1).T
+            W = np.vstack((a, W))
+            
         else:
             W = np.linalg.solve(((X.T @ X / Tx) + L * np.eye(Kx)), (X.T @ Y / Ty))
             a = np.mean(Y.T, axis=1) - W.T @ np.mean(X.T, axis=1).T
