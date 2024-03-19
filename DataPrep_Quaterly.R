@@ -1,8 +1,8 @@
 setwd('C:/Users/zhouq/OneDrive - Nanyang Technological University/FYP/Codes/FYP')
 
-library(readr)
-quaterly_data_raw <- read_csv("quaterly_data_raw.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+quaterly_data_raw <- read.csv("quaterly_data_raw.csv")
+quaterly_data_raw$Date = as.Date(quaterly_data_raw$Date, format = '%m/%d/%Y')
+
 
 """
 Data information
@@ -30,11 +30,11 @@ startDate = "1959-01-01"
 endDate = "2019-12-31"
 date_format = '%d/%m/%Y'
 
-# quaterly_data_raw$Date = format(quaterly_data_raw$Date, format = date_format)
-
 date_filtering = function(x,start_date, end_date, date_format){
+  transform_header = x[1,]
   x$Date = as.Date(x$Date,format = date_format)
   x = x[x$Date >= start_date & x$Date <= end_date,]
+  x[1,] = transform_header
   return(x)
 }
 
@@ -78,3 +78,28 @@ View(x)
 
 data_transform = transform(x)
 View(data_transform)
+
+write.csv(data_transform, "Data_Q_transformed.csv", row.names=FALSE)
+
+
+# unit root test to check that all data are stationary
+# Agumented Dicky-Fullter test
+# H0: not stationary vs H1: stationary --> Hence, aim to reject H0 to conclude data is stationary
+library(lubridate)
+library(tseries)
+
+result <- data.frame(Variable = character(), p_value = numeric(), Stationary = character(), stringsAsFactors = FALSE)
+
+for (col in colnames(data_transform)) {
+  test_result = adf.test(na.omit(data_transform[[col]]))
+  p_value = test_result$p.value
+  reject = ifelse(p_value < 0.05, "Stationary", "Not Stationary")
+  result = rbind(result, data.frame(Variable = col, p_value = p_value, Stationary = reject))
+}
+result
+
+#output results as LATEX table
+library(xtable)
+xtable_result <- xtable(result[2:nrow(result),])
+# Print the LaTeX code for the table with a caption and label
+print(xtable_result, include.rownames = FALSE)
