@@ -1,10 +1,10 @@
 setwd('C:/Users/zhouq/OneDrive - Nanyang Technological University/FYP/Codes/FYP')
 
 library(readr)
-quaterly_data_raw <- read_csv("quaterly_data_raw.csv", col_types = cols(sasdate = col_date(format = "%m/%d/%Y")))
+quaterly_data_raw <- read_csv("quaterly_data_raw.csv", 
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
 
-
-'''
+"""
 Data information
 MONTH
 Source: FRED - QD
@@ -16,7 +16,7 @@ TRANSFORMATIONS
 4: Log
 5: Dlog
 6: DDlog
-'''
+"""
 
 # SPECIFY FUNCTIONS FOR DATA TRANSFORMATION
 
@@ -30,14 +30,14 @@ startDate = "1959-01-01"
 endDate = "2019-12-31"
 date_format = '%d/%m/%Y'
 
-quaterly_data_raw$sasdate = format(quaterly_data_raw$sasdate, date_format)
+# quaterly_data_raw$Date = format(quaterly_data_raw$Date, format = date_format)
 
-date_filtering = function(x, start_date, end_date, date_format){
-  transform_header = x[1,]
+date_filtering = function(x,start_date, end_date, date_format){
   x$Date = as.Date(x$Date,format = date_format)
   x = x[x$Date >= start_date & x$Date <= end_date,]
-  x[1,] = transform_header
-  return(x)}
+  return(x)
+}
+
 
 # transformation type is in first row
 transform = function(x){
@@ -48,8 +48,9 @@ transform = function(x){
   c6 = which(x[1,]==6)
   
   x1 = x[-(1),] # remove first row
-  for (i in c2){tt = D(x1[,i]) 
-  x1[,i] = tt}
+  for (i in c2){
+    tt = D(x1[,i]) 
+    x1[,i] = tt}
   
   for (i in c3){
     tt = DD(x1[,i]) 
@@ -69,8 +70,11 @@ transform = function(x){
   
   x = x1}
 
-x1 = date_filtering(quaterly_data_raw,
-                    start_date = startDate,
-                    end_date = endDate, 
-                    date_format = date_format)
+x = date_filtering(quaterly_data_raw,
+                   start_date =  startDate,
+                   end_date = endDate, 
+                   date_format = date_format)
+View(x)
 
+data_transform = transform(x)
+View(data_transform)
